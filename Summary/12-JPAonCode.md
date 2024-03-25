@@ -66,7 +66,7 @@ import javax.persistence.Table;
 @Table(name="PEOPLE")
 public class Person {
     @Id
-    @GeneratedValue
+    @GeneratedValue // could pput (strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name="NAME")
@@ -314,6 +314,8 @@ public List<Person> searchPeople(
   }
 }
 ```
+
+The rules for defining custom queries is in the [Spring documentation](https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.query-creation)
 
 ```java
 
