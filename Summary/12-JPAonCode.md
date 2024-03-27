@@ -110,7 +110,8 @@ import com.codecademy.people.entities.Person;
 
 // creating an extension of the CrudRepository that can manage our Person model
 public interface PersonRepository extends CrudRepository<Person, Integer> {
-  // no method declarations are required! }
+  // no method declarations are required! 
+}
 ```
 
 We create a **new interface** that **extends the CrudRepository**, and **parameterize** it with our **Person model** and **the type of its ID field**, Integer.
