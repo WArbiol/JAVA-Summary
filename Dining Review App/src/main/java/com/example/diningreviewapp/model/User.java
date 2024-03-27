@@ -1,25 +1,21 @@
 package com.example.diningreviewapp.model;
+import com.example.diningreviewapp.DTO.UserDto;
+import jakarta.persistence.*;
+import lombok.Data;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import java.util.*;
 
 @Entity
-@Getter
-@Setter
-@RequiredArgsConstructor
-@ToString
+@Data //getter and setter methods are auto generated
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(unique=true)
+
+    @OneToMany(mappedBy = "user",fetch=FetchType.LAZY,cascade = CascadeType.REMOVE)
+//    @OneToMany(mappedBy = "user",fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
+    private List<Review> reviews = new ArrayList<Review>();
     private String name;
     private String city;
     private String state;
@@ -27,4 +23,23 @@ public class User {
     private Boolean peanut_allergies = false;
     private Boolean egg_allergies = false;
     private Boolean dairy_allergies = false;
+
+    public static UserDto EntityToDto(User user){
+        UserDto userDto = new UserDto();
+
+        userDto.setId(user.getId());
+        userDto.setCity(user.getCity());
+        userDto.setState(user.getState());
+        userDto.setName(user.getName());
+        userDto.setZipcode(user.getZipcode());
+        userDto.setPeanut_allergies(user.getPeanut_allergies());
+        userDto.setEgg_allergies(user.getEgg_allergies());
+        userDto.setDairy_allergies(user.getDairy_allergies());
+        List<Long> review_ids = new ArrayList<Long>();
+        for (Review r: user.getReviews()){
+            review_ids.add(r.getId());
+        }
+        userDto.setReview_ids(review_ids);
+        return userDto;
+    }
 }

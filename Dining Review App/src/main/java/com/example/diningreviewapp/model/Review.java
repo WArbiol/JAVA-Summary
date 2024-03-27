@@ -1,27 +1,42 @@
 package com.example.diningreviewapp.model;
+import com.example.diningreviewapp.DTO.ReviewDto;
+import com.example.diningreviewapp.DTO.UserDto;
+import com.example.diningreviewapp.repository.UserRepository;
+import jakarta.persistence.*;
+import lombok.*;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Data
 @ToString
 public class Review {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     private Double peanut_score = null;
+
     private Double egg_score = null;
+
     private Double dairy_score = null;
+
     private String commentary = null;
+
+    public static ReviewDto EntityToDto(Review review){
+        ReviewDto reviewDto = new ReviewDto();
+        reviewDto.setId(review.getId());
+        reviewDto.setPeanut_score(review.getPeanut_score());
+        reviewDto.setEgg_score(review.getEgg_score());
+        reviewDto.setDairy_score(review.getDairy_score());
+        reviewDto.setCommentary(review.getCommentary());
+        reviewDto.setUser_id(review.user.getId());
+        return reviewDto;
+    }
+
 }
