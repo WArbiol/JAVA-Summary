@@ -1,8 +1,10 @@
 package com.example.diningreviewapp.controller;
 
+import com.example.diningreviewapp.model.Restaurant;
 import com.example.diningreviewapp.model.Review;
 import com.example.diningreviewapp.DTO.ReviewDto;
 import com.example.diningreviewapp.model.User;
+import com.example.diningreviewapp.repository.RestaurantRepository;
 import com.example.diningreviewapp.repository.ReviewRepository;
 import com.example.diningreviewapp.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +17,12 @@ import java.util.Optional;
 @RestController
 public class ReviewController {
     private final ReviewRepository reviewRepository;
-    private final UserRepository userRepositoryRepository;
-    public ReviewController(final ReviewRepository reviewRepository, UserRepository userRepositoryRepository) {
+    private final UserRepository userRepository;
+    private final RestaurantRepository restaurantRepository;
+    public ReviewController(final ReviewRepository reviewRepository, final UserRepository userRepository, final RestaurantRepository restaurantRepository) {
         this.reviewRepository = reviewRepository;
-        this.userRepositoryRepository = userRepositoryRepository;
+        this.userRepository = userRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     @GetMapping()
@@ -31,21 +35,15 @@ public class ReviewController {
     }
     @PostMapping()
     public ReviewDto createNewReview(@RequestBody ReviewDto reviewDto) {
-        Review review = new Review();
-        review.setCommentary(reviewDto.getCommentary());
-        review.setPeanut_score(reviewDto.getPeanut_score());
-        review.setEgg_score(reviewDto.getEgg_score());
-        review.setDairy_score(reviewDto.getDairy_score());
-
-        Integer user_id = reviewDto.getUser_id() != null ? reviewDto.getUser_id().intValue() : null;
-        Optional<User> optionalUser = this.userRepositoryRepository.findById(user_id);
-        if (optionalUser.isEmpty()) return null;
-        User user = optionalUser.get();
-        review.setUser(user);
-
-        this.reviewRepository.save(review);
-
-        return Review.EntityToDto(review);
+        return this.saveReviewFromDto(reviewDto);
+    }
+    @PostMapping("/reviews")
+    public Iterable<ReviewDto> createNewReview(@RequestBody List<ReviewDto> reviewDtos) {
+        List<ReviewDto> reviewDtosUpdated = new ArrayList<>();
+        for (ReviewDto r: reviewDtos){
+            reviewDtosUpdated.add(this.saveReviewFromDto(r));
+        }
+        return reviewDtosUpdated;
     }
     @PutMapping("/{id}")
     public ReviewDto updateReview(@PathVariable("id") Integer id, @RequestBody ReviewDto r) {
@@ -72,5 +70,29 @@ public class ReviewController {
         ReviewDto reviewDto = Review.EntityToDto(reviewToDelete);
         this.reviewRepository.delete(reviewToDelete);
         return reviewDto;
+    }
+
+    private ReviewDto saveReviewFromDto(ReviewDto reviewDto) {
+        Review review = new Review();
+        review.setCommentary(reviewDto.getCommentary());
+        review.setPeanut_score(reviewDto.getPeanut_score());
+        review.setEgg_score(reviewDto.getEgg_score());
+        review.setDairy_score(reviewDto.getDairy_score());
+
+        Integer user_id = reviewDto.getUser_id() != null ? reviewDto.getUser_id().intValue() : null;
+        Optional<User> optionalUser = this.userRepository.findById(user_id);
+        if (optionalUser.isEmpty()) return null;
+        User user = optionalUser.get();
+        review.setUser(user);
+
+        Integer restaurant_id = reviewDto.getRestaurant_id() != null ? reviewDto.getRestaurant_id().intValue() : null;
+        Optional<Restaurant> optionalRestaurant = this.restaurantRepository.findById(restaurant_id);
+        if (optionalRestaurant.isEmpty()) return null;
+        Restaurant restaurant = optionalRestaurant.get();
+        review.setRestaurant(restaurant);
+        restaurant.addReview(review);
+
+        this.reviewRepository.save(review);
+        return Review.EntityToDto(review);
     }
 }

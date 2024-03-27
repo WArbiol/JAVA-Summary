@@ -1,7 +1,5 @@
 package com.example.diningreviewapp.model;
 import com.example.diningreviewapp.DTO.ReviewDto;
-import com.example.diningreviewapp.DTO.UserDto;
-import com.example.diningreviewapp.repository.UserRepository;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,13 +16,13 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Restaurant.class)
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    private Restaurant restaurant;
 
     private Double peanut_score = null;
-
     private Double egg_score = null;
-
     private Double dairy_score = null;
-
     private String commentary = null;
 
     public static ReviewDto EntityToDto(Review review){
@@ -36,6 +33,7 @@ public class Review {
         reviewDto.setDairy_score(review.getDairy_score());
         reviewDto.setCommentary(review.getCommentary());
         reviewDto.setUser_id(review.user.getId());
+        reviewDto.setRestaurant_id(review.restaurant.getId());
         return reviewDto;
     }
 

@@ -6,6 +6,7 @@ import lombok.*;
 public class ReviewDto {
     private Long id;
     private Long user_id;
+    private Long restaurant_id;
     private Double peanut_score = null;
     private Double egg_score = null;
     private Double dairy_score = null;

@@ -13,9 +13,9 @@ public class User {
     private Long id;
 
 
-    @OneToMany(mappedBy = "user",fetch=FetchType.LAZY,cascade = CascadeType.REMOVE)
-//    @OneToMany(mappedBy = "user",fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Review> reviews = new ArrayList<Review>();
+
     private String name;
     private String city;
     private String state;
