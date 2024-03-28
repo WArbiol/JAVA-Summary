@@ -6,9 +6,9 @@ import java.util.List;
 public class RestaurantDto {
     private Long id;
     private String name;
-    private List<Long> review_ids = new ArrayList<Long>();
-    private Double egg_score = .0;
-    private Double dairy_score = .0;
-    private Double peanut_score = .0;
+    private List<String> review_commentaries = new ArrayList<>();
+    private Double service_score = .0;
+    private Double price_score = .0;
+    private Double food_score = .0;
     private Double average_score = .0;
 }

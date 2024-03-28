@@ -23,70 +23,70 @@ public class Restaurant {
 
         restaurantDto.setId(restaurant.getId());
         restaurantDto.setName(restaurant.getName());
-        restaurantDto.setEgg_score(restaurant.egg_score());
-        restaurantDto.setDairy_score(restaurant.dairy_score());
-        restaurantDto.setPeanut_score(restaurant.peanut_score());
+        restaurantDto.setService_score(restaurant.service_score());
+        restaurantDto.setPrice_score(restaurant.price_score());
+        restaurantDto.setFood_score(restaurant.food_score());
         restaurantDto.setAverage_score(restaurant.average_score());
 
-        List<Long> review_ids = new ArrayList<>();
-        for (Review r: restaurant.getReviews()) review_ids.add(r.getId());
+        List<String> review_commentaries = new ArrayList<>();
+        for (Review r: restaurant.getReviews()) review_commentaries.add(r.getCommentary());
 
-        restaurantDto.setReview_ids(review_ids);
+        restaurantDto.setReview_commentaries(review_commentaries);
         return restaurantDto;
     }
     public void addReview(Review r){
         reviews.add(r);
     }
-    public Double egg_score(){
+    public Double service_score(){
         double score = .0;
-        int egg_score_size = 0;
+        int service_score_size = 0;
         for (Review r: this.reviews) {
-            if (r.getEgg_score() != null) {
-                score += r.getEgg_score();
-                egg_score_size += 1;
+            if (r.getService_score() != null) {
+                score += r.getService_score();
+                service_score_size += 1;
             }
         }
-        score/=egg_score_size;
+        score/=service_score_size;
         return score;
     }
-    public Double dairy_score(){
+    public Double price_score(){
         double score = .0;
-        int dairy_score_size = 0;
+        int price_score_size = 0;
         for (Review r: this.reviews){
-            if (r.getDairy_score()!=null){
-                score+=r.getDairy_score();
-                dairy_score_size+=1;
+            if (r.getPrice_score()!=null){
+                score+=r.getPrice_score();
+                price_score_size+=1;
             }
         }
-        score/=dairy_score_size;
+        score/=price_score_size;
         return score;
     }
-    public Double peanut_score(){
+    public Double food_score(){
         double score = .0;
-        int peanut_score_size = 0;
+        int food_score_size = 0;
         for (Review r: this.reviews){
-            if (r.getPeanut_score()!=null){
-                score+=r.getPeanut_score();
-                peanut_score_size+=1;
+            if (r.getFood_score()!=null){
+                score+=r.getFood_score();
+                food_score_size+=1;
             }
         }
-        score/=peanut_score_size;
+        score/=food_score_size;
         return score;
     }
     public Double average_score(){
         double score = .0;
         int score_size = 0;
         for (Review r: this.reviews) {
-            if (r.getEgg_score() != null) {
-                score += r.getEgg_score();
+            if (r.getService_score() != null) {
+                score += r.getService_score();
                 score_size += 1;
             }
-            if (r.getDairy_score()!=null){
-                score+=r.getDairy_score();
+            if (r.getPrice_score()!=null){
+                score+=r.getPrice_score();
                 score_size+=1;
             }
-            if (r.getPeanut_score()!=null){
-                score+=r.getPeanut_score();
+            if (r.getFood_score()!=null){
+                score+=r.getFood_score();
                 score_size+=1;
             }
         }

@@ -20,17 +20,17 @@ public class Review {
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     private Restaurant restaurant;
 
-    private Double peanut_score = null;
-    private Double egg_score = null;
-    private Double dairy_score = null;
+    private Double food_score = null;
+    private Double service_score = null;
+    private Double price_score = null;
     private String commentary = null;
 
     public static ReviewDto EntityToDto(Review review){
         ReviewDto reviewDto = new ReviewDto();
         reviewDto.setId(review.getId());
-        reviewDto.setPeanut_score(review.getPeanut_score());
-        reviewDto.setEgg_score(review.getEgg_score());
-        reviewDto.setDairy_score(review.getDairy_score());
+        reviewDto.setFood_score(review.getFood_score());
+        reviewDto.setService_score(review.getService_score());
+        reviewDto.setPrice_score(review.getPrice_score());
         reviewDto.setCommentary(review.getCommentary());
         reviewDto.setUser_id(review.user.getId());
         reviewDto.setRestaurant_id(review.restaurant.getId());

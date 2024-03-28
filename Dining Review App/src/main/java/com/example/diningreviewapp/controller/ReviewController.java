@@ -27,7 +27,7 @@ public class ReviewController {
 
     @GetMapping()
     public Iterable<ReviewDto> getAllReviews() {
-        List<ReviewDto> reviewDtos = new ArrayList<ReviewDto>();
+        List<ReviewDto> reviewDtos = new ArrayList<>();
         for (Review r: this.reviewRepository.findAll()){
             reviewDtos.add(Review.EntityToDto(r));
         }
@@ -53,9 +53,9 @@ public class ReviewController {
         // Since isPresent() was true, we can .get() the Review object out of the Optional <<<<------
         Review reviewToUpdate = reviewToUpdateOptional.get();
 
-        if (r.getPeanut_score() != null)  reviewToUpdate.setPeanut_score(r.getPeanut_score());
-        if (r.getEgg_score() != null)  reviewToUpdate.setEgg_score(r.getEgg_score());
-        if (r.getDairy_score() != null)  reviewToUpdate.setDairy_score(r.getDairy_score());
+        if (r.getFood_score() != null)  reviewToUpdate.setFood_score(r.getFood_score());
+        if (r.getService_score() != null)  reviewToUpdate.setService_score(r.getService_score());
+        if (r.getPrice_score() != null)  reviewToUpdate.setPrice_score(r.getPrice_score());
         if (r.getCommentary() != null)  reviewToUpdate.setCommentary(r.getCommentary());
         this.reviewRepository.save(reviewToUpdate);
         return Review.EntityToDto(reviewToUpdate);
@@ -75,9 +75,9 @@ public class ReviewController {
     private ReviewDto saveReviewFromDto(ReviewDto reviewDto) {
         Review review = new Review();
         review.setCommentary(reviewDto.getCommentary());
-        review.setPeanut_score(reviewDto.getPeanut_score());
-        review.setEgg_score(reviewDto.getEgg_score());
-        review.setDairy_score(reviewDto.getDairy_score());
+        review.setFood_score(reviewDto.getFood_score());
+        review.setService_score(reviewDto.getService_score());
+        review.setPrice_score(reviewDto.getPrice_score());
 
         Integer user_id = reviewDto.getUser_id() != null ? reviewDto.getUser_id().intValue() : null;
         Optional<User> optionalUser = this.userRepository.findById(user_id);
