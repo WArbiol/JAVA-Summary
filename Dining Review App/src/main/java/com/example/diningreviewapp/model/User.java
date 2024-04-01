@@ -27,7 +27,6 @@ public class User {
     public static UserDto EntityToDto(User user){
         UserDto userDto = new UserDto();
 
-        userDto.setId(user.getId());
         userDto.setCity(user.getCity());
         userDto.setState(user.getState());
         userDto.setName(user.getName());
@@ -35,11 +34,10 @@ public class User {
         userDto.setPeanut_allergies(user.getPeanut_allergies());
         userDto.setEgg_allergies(user.getEgg_allergies());
         userDto.setDairy_allergies(user.getDairy_allergies());
-        List<Long> review_ids = new ArrayList<Long>();
-        for (Review r: user.getReviews()){
-            review_ids.add(r.getId());
-        }
-        userDto.setReview_ids(review_ids);
+
+        List<String> review_commentaries = new ArrayList<>();
+        for (Review r: user.getReviews()) review_commentaries.add(r.getCommentary());
+        userDto.setReview_commentaries(review_commentaries);
         return userDto;
     }
 }

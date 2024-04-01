@@ -4,8 +4,8 @@ import lombok.*;
 
 @Data
 public class ReviewDto {
-    private Long id;
     private Long user_id;
+    private String user_name;
     private Long restaurant_id;
     private Double food_score = null;
     private Double service_score = null;

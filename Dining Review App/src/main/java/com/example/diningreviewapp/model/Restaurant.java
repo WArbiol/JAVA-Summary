@@ -21,7 +21,6 @@ public class Restaurant {
     public static RestaurantDto EntityToDto(Restaurant restaurant){
         RestaurantDto restaurantDto = new RestaurantDto();
 
-        restaurantDto.setId(restaurant.getId());
         restaurantDto.setName(restaurant.getName());
         restaurantDto.setService_score(restaurant.service_score());
         restaurantDto.setPrice_score(restaurant.price_score());
@@ -30,8 +29,8 @@ public class Restaurant {
 
         List<String> review_commentaries = new ArrayList<>();
         for (Review r: restaurant.getReviews()) review_commentaries.add(r.getCommentary());
-
         restaurantDto.setReview_commentaries(review_commentaries);
+
         return restaurantDto;
     }
     public void addReview(Review r){

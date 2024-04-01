@@ -27,12 +27,12 @@ public class Review {
 
     public static ReviewDto EntityToDto(Review review){
         ReviewDto reviewDto = new ReviewDto();
-        reviewDto.setId(review.getId());
         reviewDto.setFood_score(review.getFood_score());
         reviewDto.setService_score(review.getService_score());
         reviewDto.setPrice_score(review.getPrice_score());
         reviewDto.setCommentary(review.getCommentary());
         reviewDto.setUser_id(review.user.getId());
+        reviewDto.setUser_name(review.user.getName());
         reviewDto.setRestaurant_id(review.restaurant.getId());
         return reviewDto;
     }

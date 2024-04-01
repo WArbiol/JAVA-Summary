@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Data
 public class UserDto {
-    private Long id;
-    private List<Long> review_ids = new ArrayList<Long>();
+    private List<String> review_commentaries = new ArrayList<>();
     private String name;
     private String city;
     private String state;

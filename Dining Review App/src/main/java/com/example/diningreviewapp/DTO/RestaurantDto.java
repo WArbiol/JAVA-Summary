@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 @Data
 public class RestaurantDto {
-    private Long id;
     private String name;
     private List<String> review_commentaries = new ArrayList<>();
     private Double service_score = .0;
